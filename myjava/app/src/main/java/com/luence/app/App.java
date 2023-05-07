@@ -305,6 +305,12 @@ public class App {
                 } else {
                     System.out.println("File already exists.");
                 }
+                createfile = new File("log4.txt");
+                if (createfile.createNewFile()) {
+                    System.out.println("File created: " + createfile.getName());
+                } else {
+                    System.out.println("File already exists.");
+                }
             } catch (IOException e) {
                 System.out.println("An error occurred.");
                 e.printStackTrace();
@@ -314,6 +320,7 @@ public class App {
             FileWriter myWriter1 = new FileWriter("log1.txt");
             FileWriter myWriter2 = new FileWriter("log2.txt");
             FileWriter myWriter3 = new FileWriter("log3.txt");
+            FileWriter myWriter4 = new FileWriter("log5.txt");
 
             while (r.hasNextLine()) {
                 data = r.nextLine();
@@ -393,6 +400,10 @@ public class App {
 
                             searcher.setSimilarity(new ClassicSimilarity());
                             rankType = "TFIDFSimilarity";
+                        }else if (iter==3) {
+
+                            searcher.setSimilarity(new BM25Similarity());
+                            rankType = "BM25Similarity";
                         }else{
                             searcher.setSimilarity(new TFIDFSimilarity() {
                                 @Override
@@ -451,6 +462,8 @@ public class App {
 
                                 myWriter3.write(num + " Q0 " + d.get("I") + " " + (i + 1) + " " + hits[i].score + " " + rankType + "\n");
 
+                            }else{
+                                myWriter4.write(num + " Q0 " + d.get("I") + " " + (i + 1) + " " + hits[i].score + " " + rankType + "\n");
                             }
                         }
                     }

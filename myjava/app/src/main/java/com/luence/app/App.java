@@ -36,8 +36,8 @@ public class App {
 
         for(String word: elm) {
             if(index >= 2) {
-            query = query + " \"" + elm[index -2] + " " + elm[index -1] + " " + elm[index] + "\"";
-            query = query + " "  + elm[index -2]  + " " + elm[index -1] + " " + elm[index];
+                query = query + " \"" + elm[index -2] + " " + elm[index -1] + " " + elm[index] + "\"";
+                query = query + " "  + elm[index -2]  + " " + elm[index -1] + " " + elm[index];
             }
 
             ++index;
@@ -210,56 +210,56 @@ public class App {
         //Have title field, and more
         int count = 0;
         try (IndexWriter w = new IndexWriter(index, config)) {
-        try {
-            File f = new File("ohsumed.88-91");
-            Scanner r = new Scanner(f);
-            String title = "";
-            String M = "";
-            String W = "";
-            String S = "";
-            String I = "";
-            int first = 1;
-            while (r.hasNextLine()) {
-                String data = r.nextLine();
-                if (data.contains(".T")) {
-                    if (first == 1){
-                        first = 0;
-                    }
-                    else addDoc(w, title, I, W, M, S);
-                    //New Doc
-                    data = r.nextLine();//Get description
-                    title = data;
-                    I = "";
-                    W = "";
-                    M = "";
-                    S = "";
-                } if (data.contains(".M")) {
-                    data = r.nextLine();//Get description
-                    data = reomveStopWords(data);
-                    M = data;
-                }if (data.contains(".S")) {
-                    data = r.nextLine();//Get description
-                    data = reomveStopWords(data);
-                    S = data;
-                } if (data.contains(".W")) {
-                    data = r.nextLine();//Get description
-                    data = reomveStopWords(data);
-                    W = data;
-                    ++count;
+            try {
+                File f = new File("ohsumed.88-91");
+                Scanner r = new Scanner(f);
+                String title = "";
+                String M = "";
+                String W = "";
+                String S = "";
+                String I = "";
+                int first = 1;
+                while (r.hasNextLine()) {
+                    String data = r.nextLine();
+                    if (data.contains(".T")) {
+                        if (first == 1){
+                            first = 0;
+                        }
+                        else addDoc(w, title, I, W, M, S);
+                        //New Doc
+                        data = r.nextLine();//Get description
+                        title = data;
+                        I = "";
+                        W = "";
+                        M = "";
+                        S = "";
+                    } if (data.contains(".M")) {
+                        data = r.nextLine();//Get description
+                        data = reomveStopWords(data);
+                        M = data;
+                    }if (data.contains(".S")) {
+                        data = r.nextLine();//Get description
+                        data = reomveStopWords(data);
+                        S = data;
+                    } if (data.contains(".W")) {
+                        data = r.nextLine();//Get description
+                        data = reomveStopWords(data);
+                        W = data;
+                        ++count;
 
-                } if (data.contains(".U")) {
-                    data = r.nextLine();//Get description
-                    I = data;
+                    } if (data.contains(".U")) {
+                        data = r.nextLine();//Get description
+                        I = data;
+                    }
+
                 }
 
+                addDoc(w, title, I, W, M, S);
+                r.close();
+            } catch (FileNotFoundException e) {
+                System.out.println("File Error");
+                e.printStackTrace();
             }
-
-            addDoc(w, title, I, W, M, S);
-            r.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("File Error");
-            e.printStackTrace();
-        }
 
         }
         return index;
@@ -349,8 +349,8 @@ public class App {
                     }
 
                     if (querystr.charAt(0)==' '){
-                            querystr = querystr.substring(1);
-                        }
+                        querystr = querystr.substring(1);
+                    }
 
 
                     querystr = querystr + "~";
@@ -376,22 +376,22 @@ public class App {
                         IndexSearcher searcher = new IndexSearcher(reader);
 
                         if(iter==0) {
-                                searcher.setSimilarity(new TFIDFSimilarity() {
-                                    @Override
-                                    public float tf(float freq) {
-                                        return (float) Math.sqrt(freq);
-                                    }
+                            searcher.setSimilarity(new TFIDFSimilarity() {
+                                @Override
+                                public float tf(float freq) {
+                                    return (float) Math.sqrt(freq);
+                                }
 
-                                    @Override
-                                    public float idf(long docFreq, long docCount) {
-                                        return 1;
-                                    }
+                                @Override
+                                public float idf(long docFreq, long docCount) {
+                                    return 1;
+                                }
 
-                                    @Override
-                                    public float lengthNorm(int length) {
-                                        return (float) (1 / Math.sqrt(length));
-                                    }
-                                }); //Change ranking alg
+                                @Override
+                                public float lengthNorm(int length) {
+                                    return (float) (1 / Math.sqrt(length));
+                                }
+                            }); //Change ranking alg
                             rankType = "TFSimilarity";
                         } else if (iter==1) {
                             searcher.setSimilarity(new BooleanSimilarity());
@@ -476,6 +476,7 @@ public class App {
             myWriter1.close();
             myWriter2.close();
             myWriter3.close();
+            myWriter4.close();
         } catch (FileNotFoundException e) {
             System.out.println("File Error");
             e.printStackTrace();

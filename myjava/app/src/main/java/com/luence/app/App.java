@@ -320,7 +320,7 @@ public class App {
             FileWriter myWriter1 = new FileWriter("log1.txt");
             FileWriter myWriter2 = new FileWriter("log2.txt");
             FileWriter myWriter3 = new FileWriter("log3.txt");
-            FileWriter myWriter4 = new FileWriter("log5.txt");
+            FileWriter myWriter4 = new FileWriter("log4.txt");
 
             while (r.hasNextLine()) {
                 data = r.nextLine();
@@ -370,7 +370,7 @@ public class App {
 
                     int hitsPerPage = 50;
                     String rankType;
-                    for (int iter = 0; iter!=4 ; ++iter) {
+                    for (int iter = 0; iter!=5 ; ++iter) {
 
                         IndexReader reader = DirectoryReader.open(index);
                         IndexSearcher searcher = new IndexSearcher(reader);
